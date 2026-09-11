@@ -64,12 +64,12 @@
 </div>
 
 <div>
-    <label for="debut_a" class="block text-sm font-medium text-gray-700">Date et heure de début</label>
+    <label for="debut_a" class="block text-sm font-medium text-gray-700">Date de début</label>
     <input
-        type="datetime-local"
+        type="date"
         name="debut_a"
         id="debut_a"
-        value="{{ old('debut_a', $formation?->debut_a?->format('Y-m-d\TH:i')) }}"
+        value="{{ old('debut_a', $formation?->debut_a?->format('Y-m-d')) }}"
         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-bf-green-500 focus:ring-bf-green-500"
     >
     @error('debut_a')

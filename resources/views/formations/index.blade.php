@@ -89,7 +89,7 @@
                     <div class="space-y-1.5 text-sm text-gray-500">
                         <p class="flex items-center gap-1.5">
                             <x-icon.calendar class="h-4 w-4 text-gray-400" />
-                            {{ $formation->debut_a->translatedFormat('d M Y à H:i') }}
+                            {{ $formation->debut_a->translatedFormat('d M Y') }}
                         </p>
                         @if ($formation->lieu)
                             <p class="flex items-center gap-1.5">

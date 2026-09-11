@@ -32,21 +32,33 @@
         @endif
     </div>
 
-    <div class="hidden print:block print:mb-6">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-xs font-semibold tracking-widest text-gray-500 uppercase">Ministère des Sports, de la Jeunesse et de l'Emploi — Burkina Faso</p>
-                <h1 class="mt-1 text-xl font-bold text-gray-900">Liste de présence</h1>
+    <div class="hidden print:block print:mb-6 print:font-serif print:text-black">
+        <div class="flex items-start justify-between text-xs leading-tight">
+            <div class="text-center">
+                <p class="font-bold uppercase">Ministère des Sports</p>
+                <p class="font-bold uppercase">de la Jeunesse et de l'Emploi</p>
+                <p class="mx-auto mt-1 w-24 border-b border-dotted border-black"></p>
+                <p class="mt-1 font-bold uppercase">Secrétariat Général</p>
+                <p class="mx-auto mt-1 w-24 border-b border-dotted border-black"></p>
+                <p class="mt-1 font-bold uppercase">Direction des Systèmes</p>
+                <p class="font-bold uppercase">d'Information</p>
             </div>
-            <p class="text-xs text-gray-500">Éditée le {{ now()->translatedFormat('d M Y à H:i') }}</p>
+            <div class="text-center">
+                <p class="font-bold uppercase">Burkina Faso</p>
+                <p class="mx-auto mt-1 w-24 border-b border-dotted border-black"></p>
+                <p class="mt-1 italic">La Patrie ou la Mort, nous Vaincrons</p>
+            </div>
         </div>
-        <div class="mt-3 flex flex-wrap gap-x-8 gap-y-1 text-sm text-gray-700">
-            <span><strong>Formation :</strong> {{ $formation->titre }}</span>
-            <span><strong>Date :</strong> {{ $formation->debut_a->translatedFormat('d M Y à H:i') }}</span>
+
+        <p class="mt-6 text-center text-sm font-bold underline underline-offset-4">
+            Liste de présence de la formation {{ $formation->titre }}
+        </p>
+
+        <div class="mt-2 flex flex-wrap gap-x-8 gap-y-1 text-xs">
+            <span><strong>Date :</strong> {{ $formation->debut_a->translatedFormat('d M Y') }}</span>
             @if ($formation->lieu)
                 <span><strong>Lieu :</strong> {{ $formation->lieu }}</span>
             @endif
-            <span><strong>Participants :</strong> {{ $inscriptions->count() }} / {{ $formation->places }}</span>
         </div>
     </div>
 
@@ -96,27 +108,26 @@
             @endforeach
         </div>
 
-        <div class="hidden overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm sm:block print:block print:rounded-none print:border-0 print:shadow-none">
+        <div class="hidden overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm sm:block print:hidden">
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-100 text-sm print:w-full print:border print:border-collapse print:divide-y-0 print:border-gray-400">
-                    <thead class="bg-gray-50 print:bg-transparent">
+                <table class="min-w-full divide-y divide-gray-100 text-sm">
+                    <thead class="bg-gray-50">
                         <tr>
-                            <th class="w-10 px-4 py-3 print:hidden">
+                            <th class="w-10 px-4 py-3">
                                 <input type="checkbox" id="select-all" class="rounded border-gray-300 text-bf-green-700 focus:ring-bf-green-500">
                             </th>
-                            <th class="px-3 py-3 text-left font-medium text-gray-600 print:border print:border-gray-400 print:px-2 print:py-1.5">Nom</th>
-                            <th class="px-3 py-3 text-left font-medium text-gray-600 print:border print:border-gray-400 print:px-2 print:py-1.5">Prénom(s)</th>
-                            <th class="px-3 py-3 text-left font-medium text-gray-600 print:border print:border-gray-400 print:px-2 print:py-1.5">Téléphone</th>
-                            <th class="px-3 py-3 text-left font-medium text-gray-600 print:border print:border-gray-400 print:px-2 print:py-1.5">Email</th>
-                            <th class="px-3 py-3 text-left font-medium text-gray-600 print:border print:border-gray-400 print:px-2 print:py-1.5">Direction / Service</th>
-                            <th class="hidden text-left font-medium text-gray-600 print:table-cell print:border print:border-gray-400 print:px-2 print:py-1.5">Signature</th>
-                            <th class="px-3 py-3 text-right font-medium text-gray-600 print:hidden">Actions</th>
+                            <th class="px-3 py-3 text-left font-medium text-gray-600">Nom</th>
+                            <th class="px-3 py-3 text-left font-medium text-gray-600">Prénom(s)</th>
+                            <th class="px-3 py-3 text-left font-medium text-gray-600">Téléphone</th>
+                            <th class="px-3 py-3 text-left font-medium text-gray-600">Email</th>
+                            <th class="px-3 py-3 text-left font-medium text-gray-600">Direction / Service</th>
+                            <th class="px-3 py-3 text-right font-medium text-gray-600">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 print:divide-y-0">
+                    <tbody class="divide-y divide-gray-100">
                         @foreach ($inscriptions as $inscription)
                             <tr>
-                                <td class="px-4 py-3 print:hidden">
+                                <td class="px-4 py-3">
                                     <input
                                         type="checkbox"
                                         name="inscriptions[]"
@@ -125,13 +136,12 @@
                                         class="participant-checkbox rounded border-gray-300 text-bf-green-700 focus:ring-bf-green-500"
                                     >
                                 </td>
-                                <td class="px-3 py-3 font-medium text-gray-800 print:border print:border-gray-400 print:px-2 print:py-1.5">{{ $inscription->nom }}</td>
-                                <td class="px-3 py-3 text-gray-600 print:border print:border-gray-400 print:px-2 print:py-1.5">{{ $inscription->prenom }}</td>
-                                <td class="px-3 py-3 text-gray-600 print:border print:border-gray-400 print:px-2 print:py-1.5">{{ $inscription->telephone }}</td>
-                                <td class="px-3 py-3 text-gray-600 print:border print:border-gray-400 print:px-2 print:py-1.5">{{ $inscription->email }}</td>
-                                <td class="px-3 py-3 text-gray-600 print:border print:border-gray-400 print:px-2 print:py-1.5">{{ $inscription->direction_service }}</td>
-                                <td class="hidden print:table-cell print:border print:border-gray-400 print:px-2 print:py-4"></td>
-                                <td class="px-3 py-3 text-right print:hidden">
+                                <td class="px-3 py-3 font-medium text-gray-800">{{ $inscription->nom }}</td>
+                                <td class="px-3 py-3 text-gray-600">{{ $inscription->prenom }}</td>
+                                <td class="px-3 py-3 text-gray-600">{{ $inscription->telephone }}</td>
+                                <td class="px-3 py-3 text-gray-600">{{ $inscription->email }}</td>
+                                <td class="px-3 py-3 text-gray-600">{{ $inscription->direction_service }}</td>
+                                <td class="px-3 py-3 text-right">
                                     <form method="POST" action="{{ route('participants.destroy', $inscription) }}" onsubmit="return confirm('Retirer {{ $inscription->prenom }} {{ $inscription->nom }} de la liste ?');">
                                         @csrf
                                         @method('DELETE')
@@ -147,6 +157,31 @@
                 </table>
             </div>
         </div>
+
+        <table class="hidden w-full border-collapse border border-black text-xs print:table">
+            <thead>
+                <tr>
+                    <th class="border border-black px-2 py-1.5 text-left">N°</th>
+                    <th class="border border-black px-2 py-1.5 text-left">Nom et prénom(s)</th>
+                    <th class="border border-black px-2 py-1.5 text-left">Structure</th>
+                    <th class="border border-black px-2 py-1.5 text-left">Téléphone</th>
+                    <th class="border border-black px-2 py-1.5 text-left">Email</th>
+                    <th class="border border-black px-2 py-1.5 text-left">Signature</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($inscriptions as $inscription)
+                    <tr>
+                        <td class="border border-black px-2 py-1.5">{{ $loop->iteration }}</td>
+                        <td class="border border-black px-2 py-1.5">{{ $inscription->nom }} {{ $inscription->prenom }}</td>
+                        <td class="border border-black px-2 py-1.5">{{ $inscription->direction_service }}</td>
+                        <td class="border border-black px-2 py-1.5">{{ $inscription->telephone }}</td>
+                        <td class="border border-black px-2 py-1.5">{{ $inscription->email }}</td>
+                        <td class="border border-black px-2 py-4"></td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
         <div class="mt-6 rounded-xl border border-gray-200 bg-gray-50 p-5 print:hidden">
             <h2 class="mb-1 font-medium text-gray-900">Envoyer un email aux participants sélectionnés</h2>

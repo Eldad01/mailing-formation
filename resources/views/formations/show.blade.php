@@ -25,7 +25,7 @@
                     <div class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm text-bf-green-100">
                         <span class="flex items-center gap-1.5">
                             <x-icon.calendar class="h-4 w-4" />
-                            {{ $formation->debut_a->translatedFormat('d M Y à H:i') }}
+                            {{ $formation->debut_a->translatedFormat('d M Y') }}
                         </span>
                         @if ($formation->lieu)
                             <span class="flex items-center gap-1.5">
