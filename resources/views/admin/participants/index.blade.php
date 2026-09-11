@@ -8,6 +8,15 @@
             size: landscape;
             margin: 1.2cm;
         }
+
+        /* Empêche le thead de se répéter sur chaque page imprimée : l'entête
+           (ministère + titre) et la ligne de colonnes ne doivent apparaître
+           qu'une seule fois, en haut de la première page. */
+        @media print {
+            #liste-presence-impression thead {
+                display: table-row-group;
+            }
+        }
     </style>
 
     <a href="{{ route('formations.show', $formation) }}" class="mb-4 inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 print:hidden">
@@ -158,7 +167,7 @@
             </div>
         </div>
 
-        <table class="hidden w-full border-collapse border border-black text-xs print:table">
+        <table id="liste-presence-impression" class="hidden w-full border-collapse border border-black text-xs print:table">
             <thead>
                 <tr>
                     <th class="border border-black px-2 py-1.5 text-left">N°</th>
