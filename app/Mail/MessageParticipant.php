@@ -42,7 +42,8 @@ class MessageParticipant extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.participants.message',
+            view: 'emails.participants.message',
+            text: 'emails.participants.message-text',
         );
     }
 
