@@ -22,6 +22,7 @@ class Formation extends Model
         return [
             'debut_a' => 'datetime',
             'places' => 'integer',
+            'inscriptions_ouvertes' => 'boolean',
         ];
     }
 
@@ -41,5 +42,10 @@ class Formation extends Model
     public function estComplete(): bool
     {
         return $this->placesRestantes() === 0;
+    }
+
+    public function accepteInscriptions(): bool
+    {
+        return $this->inscriptions_ouvertes && ! $this->estComplete();
     }
 }

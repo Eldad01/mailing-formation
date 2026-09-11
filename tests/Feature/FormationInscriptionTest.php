@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Formation;
 use App\Models\Inscription;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -101,6 +102,43 @@ class FormationInscriptionTest extends TestCase
         $response->assertOk();
         $response->assertSee("Échec de l'inscription");
         $this->assertSame(1, $formation->inscriptions()->count());
+    }
+
+    public function test_on_ne_peut_pas_sinscrire_a_une_formation_aux_inscriptions_cloturees(): void
+    {
+        $formation = Formation::factory()->create(['places' => 10, 'inscriptions_ouvertes' => false]);
+
+        $response = $this->post(
+            route('formations.inscriptions.store', $formation),
+            $this->donneesInscription(),
+        );
+
+        $response->assertOk();
+        $response->assertSee("Échec de l'inscription");
+        $this->assertSame(0, $formation->inscriptions()->count());
+    }
+
+    public function test_un_admin_peut_cloturer_puis_rouvrir_les_inscriptions(): void
+    {
+        $this->actingAs(User::factory()->create());
+        $formation = Formation::factory()->create(['inscriptions_ouvertes' => true]);
+
+        $cloture = $this->post(route('formations.toggle-inscriptions', $formation));
+        $cloture->assertRedirect(route('formations.show', $formation));
+        $this->assertFalse($formation->fresh()->inscriptions_ouvertes);
+
+        $reouverture = $this->post(route('formations.toggle-inscriptions', $formation));
+        $reouverture->assertRedirect(route('formations.show', $formation));
+        $this->assertTrue($formation->fresh()->inscriptions_ouvertes);
+    }
+
+    public function test_un_visiteur_ne_peut_pas_cloturer_les_inscriptions(): void
+    {
+        $formation = Formation::factory()->create();
+
+        $response = $this->post(route('formations.toggle-inscriptions', $formation));
+
+        $response->assertRedirect(route('login'));
     }
 
     public function test_le_formulaire_disparait_apres_inscription_reussie(): void

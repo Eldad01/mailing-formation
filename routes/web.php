@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('formations/{formation}/edit', [FormationController::class, 'edit'])->name('formations.edit');
     Route::put('formations/{formation}', [FormationController::class, 'update'])->name('formations.update');
     Route::delete('formations/{formation}', [FormationController::class, 'destroy'])->name('formations.destroy');
+    Route::post('formations/{formation}/toggle-inscriptions', [FormationController::class, 'toggleInscriptions'])->name('formations.toggle-inscriptions');
 
     Route::get('formations/{formation}/participants', [ParticipantController::class, 'index'])->name('formations.participants.index');
     Route::get('formations/{formation}/participants/pdf', [ParticipantController::class, 'pdf'])->name('formations.participants.pdf');

@@ -18,6 +18,8 @@
                 <div>
                     @if ($formation->estComplete())
                         <x-badge tone="red" class="mb-3">Complet</x-badge>
+                    @elseif (! $formation->inscriptions_ouvertes)
+                        <x-badge tone="red" class="mb-3">Inscriptions clôturées</x-badge>
                     @else
                         <x-badge tone="gold" class="mb-3">Inscriptions ouvertes</x-badge>
                     @endif
@@ -37,7 +39,7 @@
                 </div>
 
                 @auth
-                    <div class="flex shrink-0 items-center gap-2">
+                    <div class="flex shrink-0 flex-wrap items-center gap-2">
                         <a
                             href="{{ route('formations.participants.index', $formation) }}"
                             class="inline-flex items-center gap-1.5 rounded-md bg-white/10 px-3.5 py-2 text-sm font-medium text-white ring-1 ring-white/30 hover:bg-white/20"
@@ -52,6 +54,24 @@
                             <x-icon.pencil class="h-4 w-4" />
                             Modifier
                         </a>
+                        <form
+                            method="POST"
+                            action="{{ route('formations.toggle-inscriptions', $formation) }}"
+                            onsubmit="return confirm('{{ $formation->inscriptions_ouvertes ? 'Clôturer les inscriptions à cette formation ?' : 'Rouvrir les inscriptions à cette formation ?' }}');"
+                        >
+                            @csrf
+                            @if ($formation->inscriptions_ouvertes)
+                                <button type="submit" class="inline-flex items-center gap-1.5 rounded-md bg-bf-red-600/90 px-3.5 py-2 text-sm font-medium text-white ring-1 ring-white/30 hover:bg-bf-red-700">
+                                    <x-icon.lock class="h-4 w-4" />
+                                    Clôturer les inscriptions
+                                </button>
+                            @else
+                                <button type="submit" class="inline-flex items-center gap-1.5 rounded-md bg-white/10 px-3.5 py-2 text-sm font-medium text-white ring-1 ring-white/30 hover:bg-white/20">
+                                    <x-icon.check-circle class="h-4 w-4" />
+                                    Rouvrir les inscriptions
+                                </button>
+                            @endif
+                        </form>
                     </div>
                 @endauth
             </div>
@@ -125,6 +145,11 @@
                         <div class="flex items-start gap-2 rounded-md border border-bf-red-100 bg-bf-red-50 px-4 py-3 text-sm text-bf-red-800">
                             <x-icon.exclamation class="h-5 w-5 shrink-0" />
                             <span>Cette formation a atteint son nombre maximal de places.</span>
+                        </div>
+                    @elseif (! $formation->inscriptions_ouvertes)
+                        <div class="flex items-start gap-2 rounded-md border border-bf-red-100 bg-bf-red-50 px-4 py-3 text-sm text-bf-red-800">
+                            <x-icon.lock class="h-5 w-5 shrink-0" />
+                            <span>Les inscriptions à cette formation sont clôturées.</span>
                         </div>
                     @else
                         <form method="POST" action="{{ route('formations.inscriptions.store', $formation) }}" class="space-y-4">

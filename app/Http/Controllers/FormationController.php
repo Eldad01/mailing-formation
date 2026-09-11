@@ -95,4 +95,21 @@ class FormationController extends Controller
             ->route('formations.index')
             ->with('status', 'Formation supprimée.');
     }
+
+    /**
+     * Open or close registrations for the specified resource.
+     */
+    public function toggleInscriptions(Formation $formation): RedirectResponse
+    {
+        $formation->inscriptions_ouvertes = ! $formation->inscriptions_ouvertes;
+        $formation->save();
+
+        $message = $formation->inscriptions_ouvertes
+            ? 'Les inscriptions sont de nouveau ouvertes.'
+            : 'Les inscriptions ont été clôturées.';
+
+        return redirect()
+            ->route('formations.show', $formation)
+            ->with('status', $message);
+    }
 }

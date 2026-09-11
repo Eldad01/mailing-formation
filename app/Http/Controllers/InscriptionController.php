@@ -14,7 +14,7 @@ class InscriptionController extends Controller
      */
     public function store(StoreInscriptionRequest $request, Formation $formation): View
     {
-        if ($formation->estComplete()) {
+        if (! $formation->accepteInscriptions()) {
             return view('inscriptions.echec', ['formation' => $formation]);
         }
 
