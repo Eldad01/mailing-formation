@@ -30,14 +30,23 @@
         </div>
 
         @if ($inscriptions->isNotEmpty())
-            <button
-                type="button"
-                onclick="window.print()"
-                class="inline-flex items-center gap-1.5 rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-                <x-icon.printer class="h-4 w-4" />
-                Imprimer
-            </button>
+            <div class="flex items-center gap-2">
+                <a
+                    href="{{ route('formations.participants.pdf', $formation) }}"
+                    class="inline-flex items-center gap-1.5 rounded-md bg-bf-green-700 px-3.5 py-2 text-sm font-medium text-white hover:bg-bf-green-800"
+                >
+                    <x-icon.download class="h-4 w-4" />
+                    Télécharger (PDF)
+                </a>
+                <button
+                    type="button"
+                    onclick="window.print()"
+                    class="inline-flex items-center gap-1.5 rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                    <x-icon.printer class="h-4 w-4" />
+                    Imprimer
+                </button>
+            </div>
         @endif
     </div>
 

@@ -7,10 +7,13 @@ use App\Http\Requests\SendParticipantsEmailRequest;
 use App\Mail\MessageParticipant;
 use App\Models\Formation;
 use App\Models\Inscription;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 class ParticipantController extends Controller
 {
@@ -25,6 +28,23 @@ class ParticipantController extends Controller
             'formation' => $formation,
             'inscriptions' => $inscriptions,
         ]);
+    }
+
+    /**
+     * Download the attendance list as a PDF.
+     */
+    public function pdf(Formation $formation): Response
+    {
+        $inscriptions = $formation->inscriptions()->orderBy('nom')->get();
+
+        $pdf = Pdf::loadView('admin.participants.pdf', [
+            'formation' => $formation,
+            'inscriptions' => $inscriptions,
+        ])->setPaper('a4', 'landscape');
+
+        $nomFichier = 'liste-presence-'.Str::slug($formation->titre).'-'.now()->format('Y-m-d').'.pdf';
+
+        return $pdf->download($nomFichier);
     }
 
     /**

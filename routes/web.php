@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function (): void {
     Route::delete('formations/{formation}', [FormationController::class, 'destroy'])->name('formations.destroy');
 
     Route::get('formations/{formation}/participants', [ParticipantController::class, 'index'])->name('formations.participants.index');
+    Route::get('formations/{formation}/participants/pdf', [ParticipantController::class, 'pdf'])->name('formations.participants.pdf');
     Route::post('formations/{formation}/participants/email', [ParticipantController::class, 'email'])->name('formations.participants.email');
     Route::delete('participants/{inscription}', [ParticipantController::class, 'destroy'])->name('participants.destroy');
 });

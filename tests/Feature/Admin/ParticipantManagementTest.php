@@ -62,6 +62,28 @@ class ParticipantManagementTest extends TestCase
         $response->assertDontSee('+226 70 99 88 77');
     }
 
+    public function test_un_visiteur_ne_peut_pas_telecharger_la_liste_de_presence(): void
+    {
+        $formation = Formation::factory()->create();
+
+        $response = $this->get(route('formations.participants.pdf', $formation));
+
+        $response->assertRedirect(route('login'));
+    }
+
+    public function test_un_admin_peut_telecharger_la_liste_de_presence_en_pdf(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $formation = Formation::factory()->create();
+        Inscription::factory()->for($formation)->create(['nom' => 'SIMPORE', 'prenom' => 'Eldad']);
+
+        $response = $this->get(route('formations.participants.pdf', $formation));
+
+        $response->assertOk();
+        $response->assertHeader('content-type', 'application/pdf');
+    }
+
     public function test_un_admin_peut_retirer_un_participant(): void
     {
         $this->actingAs(User::factory()->create());
