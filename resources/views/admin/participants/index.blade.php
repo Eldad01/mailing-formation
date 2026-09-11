@@ -50,6 +50,8 @@
         </div>
     </div>
 
+    <form id="bulk-email-form" method="POST" action="{{ route('formations.participants.email', $formation) }}" enctype="multipart/form-data"></form>
+
     @if ($inscriptions->isEmpty())
         <div class="flex flex-col items-center rounded-xl border border-dashed border-gray-300 bg-white px-6 py-16 text-center">
             <span class="flex h-14 w-14 items-center justify-center rounded-full bg-gray-100 text-gray-400">

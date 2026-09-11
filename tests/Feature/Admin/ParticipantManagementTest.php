@@ -75,6 +75,24 @@ class ParticipantManagementTest extends TestCase
         $this->assertDatabaseMissing('inscriptions', ['id' => $inscription->id]);
     }
 
+    public function test_la_page_contient_bien_le_formulaire_denvoi_groupe(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $formation = Formation::factory()->create();
+        Inscription::factory()->for($formation)->create();
+
+        $response = $this->get(route('formations.participants.index', $formation));
+
+        // The bulk-email inputs live outside the <form> and reference it via
+        // the HTML `form` attribute, so the <form id="bulk-email-form"> tag
+        // itself must exist in the markup or the browser submits nothing.
+        $response->assertSee(
+            '<form id="bulk-email-form" method="POST" action="'.route('formations.participants.email', $formation).'"',
+            false,
+        );
+    }
+
     public function test_un_admin_peut_envoyer_un_email_aux_participants_selectionnes(): void
     {
         Mail::fake();
