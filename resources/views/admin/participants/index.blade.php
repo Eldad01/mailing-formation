@@ -55,7 +55,7 @@
         </p>
 
         <div class="mt-2 flex flex-wrap gap-x-8 gap-y-1 text-xs">
-            <span><strong>Date :</strong> {{ $formation->debut_a->translatedFormat('d M Y') }}</span>
+            <span><strong>Date :</strong> {{ now()->translatedFormat('d M Y') }}</span>
             @if ($formation->lieu)
                 <span><strong>Lieu :</strong> {{ $formation->lieu }}</span>
             @endif
