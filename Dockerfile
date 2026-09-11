@@ -29,6 +29,7 @@ WORKDIR /var/www/html
 COPY . .
 COPY --from=vendor /app/vendor ./vendor
 COPY --from=assets /app/public/build ./public/build
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 RUN composer dump-autoload --optimize --no-dev \
     && chown -R www-data:www-data storage bootstrap/cache \
