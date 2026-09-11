@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Couleurs du drapeau du Burkina Faso */
+    --color-bf-red-50: #fdf2f2;
+    --color-bf-red-100: #fde3e3;
+    --color-bf-red-600: #ef2b2d;
+    --color-bf-red-700: #cc1f21;
+    --color-bf-red-800: #a5181a;
+    --color-bf-red-900: #7a1213;
+
+    --color-bf-green-50: #ecfdf3;
+    --color-bf-green-100: #d1f7e0;
+    --color-bf-green-600: #009e49;
+    --color-bf-green-700: #007a3a;
+    --color-bf-green-800: #00602e;
+    --color-bf-green-900: #014a25;
+
+    --color-bf-gold-100: #fef6d0;
+    --color-bf-gold-400: #fcd116;
+    --color-bf-gold-500: #e3ba09;
+    --color-bf-gold-600: #b89406;
+}
